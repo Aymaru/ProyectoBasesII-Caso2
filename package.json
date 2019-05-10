@@ -1,0 +1,33 @@
+{
+  "name": "caso2",
+  "version": "1.0.0",
+  "description": "Segundo Caso, Proyecto Bases II",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Aymaru/ProyectoBasesII-Caso2.git"
+  },
+  "keywords": [
+    "Cluster",
+    "Docker",
+    "NodeJs",
+    "Mongodb",
+    "Express"
+  ],
+  "author": "Aymaru Castillo Flores",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Aymaru/ProyectoBasesII-Caso2/issues"
+  },
+  "homepage": "https://github.com/Aymaru/ProyectoBasesII-Caso2#readme",
+  "dependencies": {
+    "body-parser": "^1.5.1",
+    "express": "^4.16.4",
+    "method-override": "^2.1.2",
+    "mongoose": "~3.6.11",
+    "redis": "^2.8.0"
+  }
+}
