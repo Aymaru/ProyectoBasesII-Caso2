@@ -1,9 +1,86 @@
-# docker-compose.yml
+version: '3'
+
+#Definicion de la red
+networks:
+    amarsnet:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 172.16.0.0/24
+                - gateaway: 172.16.0.254
+               
+services: 
+  
+  #Mongod instances (Shards)
+  mongo_shard_1:
+    container_name: berlin
+    image: mongo:latest
+    command: mongod --shardsvr --replSet rs_germany --dbpath /data/db --port 27017 --net amarson_net --ip 172.16.0.3
+    ports:
+      - 27018:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /amarson_mongo_cluster/data1:/data/db
+      
+      docker run -d -p 27018:27017 --net marsnet --ip 10.0.0.3 --name AMS-prov-1 mongo mongod --shardsvr --replSet "rs-prov-1" --port 27018 --dbpath /data/db
+      
+  mongo_shard_2:
+    container_name: madrid
+    image: mongo:latest
+    command: mongod --shardsvr --replSet rs_spain --dbpath /data/db --port 27017 --net amarson_net --ip 172.16.0.4
+    ports:
+      - 27019:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /amarson_mongo_cluster/data2:/data/db
+      
+  mongo_shard_3:
+    container_name: tokio
+    image: mongo:latest
+    command: mongod --shardsvr --replSet rs_japan --dbpath /data/db --port 27017 --net amarson_net --ip 172.16.0.5
+    ports:
+      - 27020:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /amarson_mongo_cluster/data3:/data/db
+    
+  
+  #Config Server      
+  mongo_config_1:
+    container_name: rome
+    image: mongo:latest
+    command: mongod --configsvr --replSet rs-italy --dbpath /data/configdb --port 27017 --net amarson_net --ip 172.16.0.2
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /mongo_cluster/config1:/data/configdb  
+      
+ #Mongos instance (Router)
+ mongo_router_1:
+    container_name: washington
+    image: mongo:latest
+    depends_on:
+      - rome
+    command: mongos --configdb rs-italy/rome:27017 --port 27017 --net amarson_net --ip 172.16.0.6
+    ports:
+      - 27021:27017
+    expose:
+      - "27017"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+
 app:
   build: ./
   volumes:
     - ./:/var/www/app
   ports:
+    - 3800:3800
     - 3800:3800
   links:
     - redis

@@ -1,4 +1,4 @@
 # Dockerfile
-FROM node:latest
-# Or whatever Node version/image you want
+FROM node:10
+
 WORKDIR '/var/www/app'
