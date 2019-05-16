@@ -23,7 +23,7 @@ services:
   mongo_shard_2:
     container_name: madrid
     image: mongo:latest
-    command: mongod --shardsvr --replSet "rs_spain" --dbpath /data/db --port 27019 --bind_ip localhost,10.0.0.4 #--bind_ip 127.0.0.1,10.0.0.4 #172.16.0.4
+    command: mongod --shardsvr --replSet "rs_spain" --dbpath /data/db --port 27019 #--bind_ip 127.0.0.1,10.0.0.4 #172.16.0.4
     ports:
       - 27019:27017
     environment:
@@ -38,7 +38,7 @@ services:
   mongo_shard_3:
     container_name: tokio
     image: mongo:latest
-    command: mongod --shardsvr --replSet "rs_japan" --dbpath /data/db --port 27020 --bind_ip localhost,10.0.0.5 #--bind_ip 127.0.0.1,10.0.0.5 #172.16.0.5
+    command: mongod --shardsvr --replSet "rs_japan" --dbpath /data/db --port 27020 #--bind_ip 127.0.0.1,10.0.0.5 #172.16.0.5
     ports:
       - 27020:27017
     environment:
@@ -75,7 +75,7 @@ services:
     networks:
       amarsnet:
         ipv4_address: 10.0.0.6 #172.16.0.6
-    command: mongos --port 27021 --configdb rs_italy/rome:27017 --bind_ip localhost,10.0.0.6
+    command: mongos --port 27021 --configdb rs_italy/rome:27017
     depends_on:
       - mongo_config_1    
         
@@ -88,23 +88,20 @@ services:
   app:
     build: ./
     volumes:
-        - ./:/usr/src/app
+        - ./:/var/www/app
     ports:
-        - 3000:3000
+        - 3800:3800
     links:
         - redis
-        - mongo_router_1
     environment:
         - NODE_ENV=development
-        - PORT=3000
+        - PORT=3800
         - REDIS_URL=redis://cache
-        - DB_HOST=mongo_router_1://washington
-        - DB_USER=mongo_router_1
     command:
         sh -c 'npm i && node app.js'
-    networks:
-      amarsnet:
-        ipv4_address: 10.0.0.7 #172.16.0.6
+    #networks:
+    #  amarsnet:
+    #    ipv4_address: 10.0.0.7 #172.16.0.6
 
   redis:
     image: redis

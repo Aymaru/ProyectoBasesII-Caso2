@@ -1,0 +1,40 @@
+//Proveedores
+{
+    _id : 0,
+    name: "Proveedor 1",
+    description: "Proveedor 1",
+    status: true, //false
+}
+
+//Productos
+{
+    _id:0,
+    name: "Producto 1",
+    description: "Producto 1",
+    image_url: "url",
+    specs: [
+        { 
+            label: "Color",
+            value: "Red",
+            unit: , ""
+        },
+        
+        { 
+            label: "Size",
+            value: "15",
+            unit: , "cm2"
+        }
+    ],
+    price: 777,
+    details: [
+        {
+            label: "Descuento Oferta",
+            value: 50,
+            description: "Algun motivo"
+        }
+    ],
+    tags: [ "tag1", "tag2", "tag3"],
+    stock_left: 10,
+    supplier_id: 0
+    
+}

@@ -11,7 +11,8 @@
     "url": "git+https://github.com/Aymaru/ProyectoBasesII-Caso2.git"
   },
   "keywords": [
-    "Cluster",
+    "Redis",
+    "REST",
     "Docker",
     "NodeJs",
     "Mongodb",
@@ -27,7 +28,8 @@
     "body-parser": "^1.5.1",
     "express": "^4.16.4",
     "method-override": "^2.1.2",
-    "mongoose": "~3.6.11",
-    "redis": "^2.8.0"
+    "mongoose": "^5.5.7",
+    "redis": "^2.8.0",
+    "requirejs": "^2.3.6"
   }
 }

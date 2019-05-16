@@ -1,0 +1,36 @@
+version: '3'
+
+#Definicion de la red
+              
+services: 
+
+  
+ #Config Server      
+  mongo_config_1:
+    container_name: rome
+    image: mongo_cluster
+    command: mongod --configsvr --replSet "rs_italy" --dbpath /data/configdb --port 27017 #--bind_ip  127.0.0.1,10.0.0.2 #172.16.0.2
+    ports:
+      - 27017:27017
+    expose:
+      - "27017"
+    environment:
+      ROLE: master
+    volumes:
+      - romedata:/mongo_cluster/data/configdb
+    networks:
+      amarsnet:
+        ipv4_address: 172.16.0.2 #10.0.0.2 
+
+networks:
+    amarsnet:
+        driver: bridge
+        ipam:
+            config:
+                #- subnet: 10.0.0.0/28
+                - subnet: 172.16.0.0/24
+                #sgateway: 172.18.1.1
+                
+volumes:
+    romedata:
+    
