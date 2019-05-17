@@ -1,7 +1,7 @@
 'use strict';
 
-module.exports.saveSupplier  = function(db, name, description, callback) {
-	db.collection('suppliers_info').save({name : name, description : description, status : true}, callback);
+module.exports.saveSupplier  = function(db, id, name, description, callback) {
+	db.collection('suppliers_info').save({ _id : id, name : name, description : description, status : true}, callback);
 };
 
 module.exports.findProductsCached = function(db, redis, callback) {
