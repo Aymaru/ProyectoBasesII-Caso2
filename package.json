@@ -29,7 +29,7 @@
     "express": "^4.16.4",
     "method-override": "^2.1.2",
     "mongoose": "^5.5.7",
-    "redis": "^2.8.0",
+    "redis": "^3.1.1",
     "requirejs": "^2.3.6"
   }
 }
